@@ -58,7 +58,7 @@ jobs:
         application_name: NestJS-AWS
         environment_name: NestjsAws-env
         region: us-east-2
-        version_label: "my-app-${{ steps.format-time.outputs.replaced }}"
+        version_label: "Sample Application-${{ steps.format-time.outputs.replaced }}"
         deployment_package: deploy.zip
 
     - name: Deployed!
