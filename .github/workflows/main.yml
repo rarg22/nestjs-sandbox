@@ -37,6 +37,9 @@ jobs:
     - name: Generate deployment package
       run: npm run zip
 
+    - name: Check deployment package
+      run: zipinfo deploy.zip
+
     - name: Get timestamp
       uses: gerred/actions/current-time@master
       id: current-time
