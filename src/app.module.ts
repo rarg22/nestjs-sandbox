@@ -4,9 +4,7 @@ import { join } from 'path';
 import { CatsController } from './cats/cats.controller';
 
 @Module({
-  imports: [ServeStaticModule.forRoot({
-    rootPath: join(__dirname, '..', 'public'),
-  })],
+  imports: [],
   controllers: [CatsController],
   providers: [],
 })
