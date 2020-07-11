@@ -1,4 +1,4 @@
-name: NestJSAWS
+name: ELB-DEMO
 
 on:
   push:
@@ -35,7 +35,7 @@ jobs:
       run: npm run build
 
     - name: Generate deployment package
-      run: zip -r -j deploy.zip dist/*
+      run: npm run zip
 
     - name: Get timestamp
       uses: gerred/actions/current-time@master
@@ -55,8 +55,8 @@ jobs:
       with:
         aws_access_key: ${{secrets.AWS_ACCESS_KEY}}
         aws_secret_key: ${{secrets.AWS_SECRET_KEY}}
-        application_name: NestJS-Demo
-        environment_name: NestjsDemo-env
+        application_name: ELB-Demo
+        environment_name: ElbDemo-env
         region: us-east-2
         version_label: "api-${{ steps.format-time.outputs.replaced }}"
         deployment_package: deploy.zip
