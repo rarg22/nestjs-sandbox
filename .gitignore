@@ -10,6 +10,8 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+deploy.zip
+
 # OS
 .DS_Store
 
