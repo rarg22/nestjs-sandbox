@@ -1,0 +1,32 @@
+name: ELB-DEMO
+
+on:
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache node modules
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm
+        key: ${{ hashFiles('**/package-lock.json') }}
+        restore-keys: -node-
+
+    - name: Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12'
+
+    - name: NPM install script
+      run: npm install
+
+    - name: NPM run build script
+      run: npm run build
+    
+    - name: NPM run test script
+      run: npm run test
