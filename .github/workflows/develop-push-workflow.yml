@@ -17,19 +17,14 @@ jobs:
         key: ${{ hashFiles('**/package-lock.json') }}
         restore-keys: -node-
 
-    - name: Node
+    - name: Node Setup
       uses: actions/setup-node@v1
       with:
         node-version: '12'
 
-    - name: NPM install script
-      run: npm install
-
-    - name: NPM run build script
-      run: npm run build
-    
-    - name: NPM run test script
-      run: npm run test
+    - run: npm install
+    - run: npm run build
+    - run: npm run test
 
     - name: Upload Deployment Artifacts
       uses: actions/upload-artifact@v2
@@ -45,7 +40,6 @@ jobs:
     needs: build
 
     steps:
-    - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
         node-version: '12'
@@ -58,15 +52,10 @@ jobs:
     - name: Generate deployment package
       run: npm run zip
 
-    - name: Check deployment package
-      run: zipinfo deploy.zip
-
-    - name: Get timestamp
-      uses: gerred/actions/current-time@master
+    - uses: gerred/actions/current-time@master
       id: current-time
 
-    - name: Run string replace
-      uses: frabert/replace-string-action@master
+    - uses: frabert/replace-string-action@master
       id: format-time
       with:
         pattern: '[:\.]+'
@@ -74,7 +63,7 @@ jobs:
         replace-with: '-'
         flags: 'g'
 
-    - name: Beanstalk Deploy for app
+    - name: Deploy to AWS Beanstalk
       uses: einaregilsson/beanstalk-deploy@v10
       with:
         aws_access_key: ${{secrets.AWS_ACCESS_KEY}}
