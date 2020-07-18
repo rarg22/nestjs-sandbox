@@ -1,9 +1,9 @@
-name: ELB-DEMO
+name: Develop Pull-Request Workflow
 
 on:
   pull_request:
     branches:
-    - master
+    - develop
 
 jobs:
   build:
