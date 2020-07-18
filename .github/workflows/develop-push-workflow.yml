@@ -79,9 +79,11 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+    needs: build
     steps:
-    - run: docker build -f "docker/Dockerfile.dev" -t docker.pkg.github.com/rarg22/nestjs-sandbox/app:latest .
+    - uses: actions/checkout@v2
+    - run: docker build -f "docker/Dockerfile.dev" -t docker.pkg.github.com/rarg22/nestjs-sandbox/develop:latest .
     - run: docker login docker.pkg.github.com -u rarg22 -p ${{ secrets.GITHUB_TOKEN }}
-    - run: docker push docker.pkg.github.com/rarg22/nestjs-sandbox/app:latest
+    - run: docker push docker.pkg.github.com/rarg22/nestjs-sandbox/develop:latest
 
     
