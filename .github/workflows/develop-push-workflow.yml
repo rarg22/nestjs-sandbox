@@ -76,3 +76,12 @@ jobs:
 
     - name: Deployed!
       run: echo Application Version-elb-demo-source-${{ steps.format-time.outputs.replaced }} deployed succesfully!
+
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - run: docker build -f "docker/Dockerfile.dev" -t docker.pkg.github.com/rarg22/nestjs-sandbox/app:latest .
+    - run: docker login docker.pkg.github.com -u rarg22 -p ${{ secrets.GITHUB_TOKEN }}
+    - run: docker push docker.pkg.github.com/rarg22/nestjs-sandbox/app:latest
+
+    
