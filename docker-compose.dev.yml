@@ -1,17 +1,17 @@
 version: '3.3'
 services:
-  web:
+  api:
     stdin_open: true
     build:
-        context: ./docker
-        dockerfile: Dockerfile.dev
+        context: .
+        dockerfile: ./docker/Dockerfile.dev
     ports:
       - "3000:3000"
     volumes: 
      - type: bind
        source: ./src
-       target: /reactjs_sandbox/src
-  api:
+       target: /nestjs_sandbox/src
+  web:
     image: docker.pkg.github.com/rarg22/github-actions-continuous-delivery/rarg22-aws-ttt:175
     ports: 
       - "80:80"

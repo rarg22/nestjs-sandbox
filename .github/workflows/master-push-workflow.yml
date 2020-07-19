@@ -82,8 +82,10 @@ jobs:
     needs: build
     steps:
     - uses: actions/checkout@v2
-    - run: docker build -f "docker/Dockerfile.dev" -t docker.pkg.github.com/rarg22/nestjs-sandbox/master:latest .
-    - run: docker login docker.pkg.github.com -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-    - run: docker push docker.pkg.github.com/rarg22/nestjs-sandbox/master:latest
+    - run: |
+          PACKAGE_NAME=nestjs-sandbox-master
+          docker build -f "docker/Dockerfile.dev" -t docker.pkg.github.com/${{ github.repository }}/${PACKAGE_NAME}:latest .
+          docker login docker.pkg.github.com -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+          docker push docker.pkg.github.com/${{ github.repository }}/${PACKAGE_NAME}:latest
 
     

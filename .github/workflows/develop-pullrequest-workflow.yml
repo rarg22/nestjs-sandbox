@@ -17,16 +17,10 @@ jobs:
         key: ${{ hashFiles('**/package-lock.json') }}
         restore-keys: -node-
 
-    - name: Node
+    - name: Node Setup
       uses: actions/setup-node@v1
       with:
         node-version: '12'
-
-    - name: NPM install script
-      run: npm install
-
-    - name: NPM run build script
-      run: npm run build
-    
-    - name: NPM run test script
-      run: npm run test
+    - run: npm install
+    - run: npm run build
+    - run: npm run test
