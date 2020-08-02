@@ -1,14 +1,22 @@
 import { Module } from '@nestjs/common';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
-import { CatsController } from './cats/cats.controller';
 import { AppController } from './app.controller';
-import { PersonsController } from './persons/persons.controller';
-import { DogsController } from './dogs/dogs.controller';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { AppConfigSchema } from './app.config.schema';
+import { CognitoConfig } from './cognito/cognito.config';
 
 @Module({
-  imports: [],
-  controllers: [CatsController, AppController, PersonsController, DogsController],
-  providers: [],
+    imports: [
+        ConfigModule.forRoot({
+            validationSchema: AppConfigSchema,
+            load: [CognitoConfig],
+            isGlobal: true,
+        }),
+        UserModule,
+        AuthModule,
+    ],
+    controllers: [AppController],
+    providers: [ConfigService],
 })
-export class AppModule { }
+export class AppModule {}

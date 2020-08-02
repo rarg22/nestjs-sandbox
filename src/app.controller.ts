@@ -1,10 +1,9 @@
-import { Controller, Get, Res } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 
 @Controller()
 export class AppController {
     @Get('/')
-    getAll(@Res() response) {
-        response.status(200);
-        response.json({ message: "Welcome!" })
+    getAll() {
+        return 'Welcome!';
     }
 }

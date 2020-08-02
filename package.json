@@ -10,7 +10,7 @@
     "build": "nest build app",
     "zip": "zip -r deploy.zip . -x \"*node_modules*\" -x \"*.git*\" -x \"*test*\" -x \"*src*\" -x \"*eslintrc*\" -x \"*prettierrc*\" -x \"*nest-cli*\" -x \"*tsconfig*\"",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "node dist/main",
+    "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -22,13 +22,18 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "@nestjs/common": "^7.0.0",
+    "@nestjs/config": "^0.5.0",
     "@nestjs/core": "^7.0.0",
     "@nestjs/platform-express": "^7.0.0",
     "@nestjs/serve-static": "^2.1.3",
+    "amazon-cognito-identity-js": "^4.3.3",
+    "dynamoose": "^2.2.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^6.5.4"
+    "rxjs": "^6.5.4",
+    "uuid": "^8.2.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.0.0",
@@ -38,6 +43,7 @@
     "@types/jest": "25.2.3",
     "@types/node": "^13.9.1",
     "@types/supertest": "^2.0.8",
+    "@types/uuid": "^8.0.0",
     "@typescript-eslint/eslint-plugin": "3.0.2",
     "@typescript-eslint/parser": "3.0.2",
     "eslint": "7.1.0",
