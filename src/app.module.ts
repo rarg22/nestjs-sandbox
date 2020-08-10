@@ -4,7 +4,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { AppConfigSchema } from './app.config.schema';
-import { CognitoConfig } from './cognito/cognito.config';
+import { CognitoConfig } from './aws/aws.config';
+import { RegistrationModule } from './registration/registration.module';
+import { RecoveryModule } from './recovery/recovery.module';
+import { IdentityModule } from './identity/identity.module';
+import { AwsModule } from './aws/aws.module';
 
 @Module({
     imports: [
@@ -15,8 +19,12 @@ import { CognitoConfig } from './cognito/cognito.config';
         }),
         UserModule,
         AuthModule,
+        RegistrationModule,
+        RecoveryModule,
+        IdentityModule,
+        AwsModule,
     ],
     controllers: [AppController],
     providers: [ConfigService],
 })
-export class AppModule {}
+export class AppModule { }
