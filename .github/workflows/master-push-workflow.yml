@@ -1,91 +1,24 @@
-name: Master Push Workflow
 
-on:
-  push:
-    branches:
-    - master
+name: Test
+
+on: [push, pull_request]
 
 jobs:
-  build:
+
+  test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: 
+        run: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
     steps:
-    - uses: actions/checkout@v2
-    - name: Cache node modules
-      uses: actions/cache@v1
-      with:
-        path: ~/.npm
-        key: ${{ hashFiles('**/package-lock.json') }}
-        restore-keys: -node-
 
-    - name: Node Setup
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12'
+      - uses: actions/checkout@v2
 
-    - run: npm install
-    - run: npm run build
-    - run: npm run test
 
-    - name: Upload Deployment Artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: deployment-artifacts
-        path: |
-          dist
-          package.json
-          pacakage-lock.json
+      - name: chmod
+        run: chmod +x yyy
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '12'
-
-    - name: Download deployment artifacts
-      uses: actions/download-artifact@v2
-      with:
-        name: deployment-artifacts
-
-    - name: Generate deployment package
-      run: npm run zip
-
-    - uses: gerred/actions/current-time@master
-      id: current-time
-
-    - uses: frabert/replace-string-action@master
-      id: format-time
-      with:
-        pattern: '[:\.]+'
-        string: "${{ steps.current-time.outputs.time }}"
-        replace-with: '-'
-        flags: 'g'
-
-    - name: Deploy to AWS Beanstalk
-      uses: einaregilsson/beanstalk-deploy@v10
-      with:
-        aws_access_key: ${{secrets.AWS_ACCESS_KEY}}
-        aws_secret_key: ${{secrets.AWS_SECRET_KEY}}
-        application_name: ELB-Demo
-        environment_name: ElbDemo-env
-        region: us-east-2
-        version_label: "elb-demo-master-${{ steps.format-time.outputs.replaced }}"
-        deployment_package: deploy.zip
-
-    - name: Deployed!
-      run: echo Application Version-elb-demo-source-${{ steps.format-time.outputs.replaced }} deployed succesfully!
-
-  publish:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - uses: actions/checkout@v2
-    - run: |
-          PACKAGE_NAME=nestjs-sandbox-master
-          docker build -f "docker/Dockerfile.dev" -t docker.pkg.github.com/${{ github.repository }}/${PACKAGE_NAME}:latest .
-          docker login docker.pkg.github.com -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
-          docker push docker.pkg.github.com/${{ github.repository }}/${PACKAGE_NAME}:latest
-
+      - name: run
+        run: ./yyy
     
