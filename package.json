@@ -35,7 +35,7 @@
     "class-validator": "^0.12.2",
     "dynamoose": "^2.2.1",
     "helmet": "^4.1.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.5.4",
